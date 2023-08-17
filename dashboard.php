@@ -2,6 +2,7 @@
 session_start();
 require "includes/database_connect.php";
 
+//checks if a user_id is set in the session
 if (!isset($_SESSION["user_id"])) {
     header("location: index.php");
     die();
@@ -19,7 +20,7 @@ if (!$user) {
     echo "Something went wrong!";
     return;
 }
-
+//fetches interested user property data performs an inner join between the interested_users_properties and properties using property id
 $sql_2 = "SELECT * 
             FROM interested_users_properties iup
             INNER JOIN properties p ON iup.property_id = p.id
@@ -104,6 +105,7 @@ $interested_properties = mysqli_fetch_all($result_2, MYSQLI_ASSOC);
                                 $total_rating = ($property['rating_clean'] + $property['rating_food'] + $property['rating_safety']) / 3;
                                 $total_rating = round($total_rating, 1);
                                 ?>
+                                //calculates the average rating
                                 <div class="star-container" title="<?= $total_rating ?>">
                                     <?php
                                     $rating = $total_rating;
