@@ -1,9 +1,13 @@
+//executes when window is loaded
 window.addEventListener("load", function () {
-    const search = window.location.search;
-    const params = new URLSearchParams(search);
+    const search = window.location.search; //fetches property id from address
+    const params = new URLSearchParams(search); //converts into an object
     const property_id = params.get('property_id');
 
+    //fetches filled or empty heard accordingly from property details page
     var is_interested_image = document.getElementsByClassName("is-interested-image")[0];
+
+    //executes when the image is clicked
     is_interested_image.addEventListener("click", function (event) {
         var XHR = new XMLHttpRequest();
 
@@ -29,7 +33,7 @@ var toggle_interested_success = function (event) {
 
     var response = JSON.parse(event.target.responseText);
     if (response.success) {
-        var is_interested_image = document.getElementsByClassName("is-interested-image")[0];
+        var is_interested_image = document.getElementsByClassName("is-interested-image")[0];// after login marks the property as interested
         var interested_user_count = document.getElementsByClassName("interested-user-count")[0];
 
         if (response.is_interested) {
