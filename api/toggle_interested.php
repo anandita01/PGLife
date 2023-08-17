@@ -1,8 +1,8 @@
 <?php
-session_start();
+session_start();//takes the user id
 
 require "../includes/database_connect.php";
-
+//checks whether user is logged in
 if (!isset($_SESSION['user_id'])) {
     echo json_encode(array("success" => false, "is_logged_in" => false));
     return;
@@ -11,13 +11,16 @@ if (!isset($_SESSION['user_id'])) {
 $user_id = $_SESSION['user_id'];
 $property_id = $_GET["property_id"];
 
-$sql_1 = "SELECT * FROM interested_users_properties WHERE user_id = $user_id AND property_id = $property_id";
+$sql_1 = "SELECT * FROM interested_users_properties WHERE user_id = $user_id AND property_id = $property_id";//retrieves information of liked properties
 $result_1 = mysqli_query($conn, $sql_1);
+
+//checking whether the entry is present in the database
 if (!$result_1) {
     echo json_encode(array("success" => false, "message" => "Something went wrong"));
     return;
 }
 
+//property is liked
 if (mysqli_num_rows($result_1) > 0) {
     $sql_2 = "DELETE FROM interested_users_properties WHERE user_id = $user_id AND property_id = $property_id";
     $result_2 = mysqli_query($conn, $sql_2);
